@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>InstaLite — Social Feed</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+  <aside class="sidebar">
+    <a class="brand" href="#" aria-label="InstaLite home"><span class="brand-icon">◎</span><span class="brand-text">InstaLite</span></a>
+    <nav>
+      <button class="nav-item active" data-view="home"><span>⌂</span> Home</button>
+      <button class="nav-item" data-view="search"><span>⌕</span> Search</button>
+      <button class="nav-item" data-view="explore"><span>▦</span> Explore</button>
+      <button class="nav-item" data-view="reels"><span>▶</span> Reels</button>
+      <button class="nav-item" data-view="messages"><span>➤</span> Messages</button>
+      <button class="nav-item" data-view="notifications"><span>♡</span> Notifications</button>
+      <button class="nav-item" data-view="saved"><span>♧</span> Saved</button>
+      <button class="nav-item" id="openCreate"><span>⊕</span> Create</button>
+      <button class="nav-item" data-view="profile"><span class="mini-avatar">S</span> Profile</button>
+    </nav>
+    <button class="nav-item more" id="aboutBtn"><span>☰</span> More</button>
+  </aside>
+
+  <main class="layout">
+    <section class="feed-column">
+      <header class="mobile-header"><span class="brand"><span class="brand-icon">◎</span> InstaLite</span><span class="mobile-header-actions"><button data-view="search" class="icon-button" aria-label="Search">⌕</button><button data-view="messages" class="icon-button" aria-label="Messages">➤</button><button id="mobileCreate" class="icon-button" aria-label="Create post">＋</button></span></header>
+      <div class="stories-panel">
+        <div class="stories" id="stories"></div>
+      </div>
+      <div id="feed" class="feed"></div>
+      <p class="end-note">You're all caught up ✨</p>
+      <section id="searchView" class="page-view hidden" aria-label="Search">
+        <h1>Search</h1>
+        <label class="search-box"><span>⌕</span><input id="searchInput" type="search" placeholder="Search people and captions" autocomplete="off"></label>
+        <div id="searchResults" class="search-results"></div>
+      </section>
+      <section id="exploreView" class="page-view hidden" aria-label="Explore">
+        <h1>Explore</h1>
+        <div id="exploreGrid" class="explore-grid"></div>
+      </section>
+      <section id="reelsView" class="page-view reels-view hidden" aria-label="Reels">
+        <div class="reels-heading"><div><h1>Reels</h1><p>Short videos from the InstaLite community.</p></div><button id="openReelCreate" class="primary-button">＋ Create reel</button></div>
+        <div id="reelsFeed" class="reels-feed"></div>
+      </section>
+      <section id="messagesView" class="page-view hidden" aria-label="Messages">
+        <h1>Messages</h1>
+        <div class="messages-layout">
+          <div id="conversationList" class="conversation-list"></div>
+          <div id="conversation" class="conversation">
+            <div class="empty-state">Choose a conversation to start chatting.</div>
+          </div>
+        </div>
+      </section>
+      <section id="notificationsView" class="page-view hidden" aria-label="Notifications">
+        <h1>Notifications</h1>
+        <div id="notificationsList" class="activity-list"></div>
+      </section>
+      <section id="savedView" class="page-view hidden" aria-label="Saved posts">
+        <h1>Saved</h1>
+        <div id="savedGrid" class="explore-grid"></div>
+      </section>
+      <section id="profileView" class="page-view hidden" aria-label="Profile">
+        <div class="profile-page-head">
+          <div id="profilePageAvatar" class="profile-page-avatar">S</div>
+          <div><h1 id="profilePageUsername">santhosh.dev</h1><p id="profilePageName"></p><p id="profilePageBio"></p><button id="profilePageEdit" class="text-button">Edit profile</button></div>
+        </div>
+        <h2>Your posts</h2>
+        <div id="profileGrid" class="explore-grid"></div>
+      </section>
+    </section>
+
+    <aside class="right-column">
+      <div class="profile-switch">
+        <button class="avatar avatar-me" id="myAvatar">S</button>
+        <div class="user-lines"><strong id="sideUsername">santhosh.dev</strong><span id="sideName">Santhosh · Your profile</span></div>
+        <button class="text-button" id="editProfile">Edit</button>
+      </div>
+      <div class="suggestion-heading"><span>Suggested for you</span><button class="text-button" id="refreshSuggestions">See All</button></div>
+      <div id="suggestions" class="suggestions"></div>
+      <p class="footer-links">About · Help · Press · API · Jobs · Privacy · Terms</p>
+      <p class="copyright">© 2026 INSTALITE · DEMO PROJECT</p>
+    </aside>
+  </main>
+
+  <nav class="mobile-nav">
+    <button data-view="home" aria-label="Home">⌂</button>
+    <button data-view="explore" aria-label="Explore">▦</button>
+    <button data-view="reels" aria-label="Reels">▶</button>
+    <button data-view="saved" aria-label="Saved posts">♧</button>
+    <button id="mobileCreateBottom" aria-label="Create post">⊕</button>
+    <button data-view="notifications" aria-label="Notifications">♡</button>
+    <button data-view="profile" aria-label="Profile">◉</button>
+  </nav>
+
+  <div class="modal-backdrop hidden" id="createModal">
+    <section class="modal">
+      <div class="modal-head"><button class="icon-button" id="closeCreate">×</button><strong>Create a post</strong><button class="text-button" id="publishPost">Share</button></div>
+      <div class="create-body">
+        <label class="upload-box" for="imageInput"><span class="upload-icon">⇧</span><strong>Choose a photo</strong><span>PNG or JPG from your device</span><input type="file" id="imageInput" accept="image/*" hidden></label>
+        <img id="imagePreview" class="image-preview hidden" alt="Selected post preview">
+        <textarea id="captionInput" placeholder="Write a caption..."></textarea>
+        <input id="imageUrlInput" class="url-input" type="url" placeholder="Or paste an image URL (optional)">
+      </div>
+      <p class="modal-help">Tip: Posts are saved in this browser for your demo.</p>
+    </section>
+  </div>
+
+  <div class="modal-backdrop hidden" id="profileModal">
+    <section class="modal small-modal">
+      <div class="modal-head"><button class="icon-button" id="closeProfile">×</button><strong>Edit profile</strong><button class="text-button" id="saveProfile">Save</button></div>
+      <div class="profile-form">
+        <label>Username<input id="usernameInput" maxlength="24" value="santhosh.dev"></label>
+        <label>Display name<input id="displayNameInput" maxlength="40" value="Santhosh"></label>
+        <label>Bio<textarea id="bioInput" maxlength="120">Building ideas, one line of code at a time ✨</textarea></label>
+      </div>
+    </section>
+  </div>
+  <div class="modal-backdrop hidden" id="reelModal">
+    <section class="modal small-modal">
+      <div class="modal-head"><button class="icon-button" id="closeReelCreate" aria-label="Close">×</button><strong>Create a reel</strong><button class="text-button" id="publishReel">Share</button></div>
+      <div class="create-body">
+        <label class="upload-box reel-upload-box" for="reelInput"><span class="upload-icon">▶</span><strong>Choose a video</strong><span>MP4, WebM, or another browser-supported format</span><input type="file" id="reelInput" accept="video/*" hidden></label>
+        <video id="reelPreview" class="reel-preview hidden" controls muted playsinline></video>
+        <textarea id="reelCaptionInput" maxlength="300" placeholder="Write a caption..."></textarea>
+        <input id="reelUrlInput" class="url-input" type="url" placeholder="Or paste a video URL (optional)">
+      </div>
+      <p class="modal-help">Uploaded videos are saved in this browser (up to 100 MB each).</p>
+    </section>
+  </div>
+  <div class="modal-backdrop hidden" id="storyModal" role="dialog" aria-modal="true" aria-label="Story">
+    <section class="story-modal">
+      <button class="story-close icon-button" id="closeStory" aria-label="Close story">×</button>
+      <div id="storyContent"></div>
+      <button class="story-next" id="nextStory" aria-label="Next story">›</button>
+    </section>
+  </div>
+  <div class="toast" id="toast" role="status"></div>
+  <script src="script.js"></script>
+</body>
+</html>
